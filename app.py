@@ -6,7 +6,7 @@ import re
 st.set_page_config(layout="wide", page_title="Heart AI", page_icon="❤️")
 
 # ---------------- API ----------------
-API_KEY = "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"
+API_KEY = "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"
 
 client = Groq(api_key=API_KEY)
 
