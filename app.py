@@ -124,10 +124,15 @@ st.markdown('</div>', unsafe_allow_html=True)
 def extract_bpm(text):
     text_lower = text.lower()
 
-    # Only treat as BPM if keywords are present
-    if any(word in text_lower for word in ["bpm", "heart rate", "pulse"]):
-        numbers = re.findall(r'\d+', text)
-        return int(numbers[0]) if numbers else None
+    # Case 1: BPM explicitly mentioned
+    match = re.search(r'(bpm|heart rate|pulse)[^\d]*(\d+)', text_lower)
+    if match:
+        return int(match.group(2))
+
+    # Case 2: number before BPM
+    match = re.search(r'(\d+)\s*(bpm)', text_lower)
+    if match:
+        return int(match.group(1))
 
     return None
 
