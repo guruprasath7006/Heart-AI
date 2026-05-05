@@ -122,8 +122,14 @@ for msg in st.session_state.current_chat["messages"]:
 st.markdown('</div>', unsafe_allow_html=True)
 # ---------------- BPM FUNCTION ----------------
 def extract_bpm(text):
-    numbers = re.findall(r'\d+', text)
-    return int(numbers[0]) if numbers else None
+    text_lower = text.lower()
+
+    # Only treat as BPM if keywords are present
+    if any(word in text_lower for word in ["bpm", "heart rate", "pulse"]):
+        numbers = re.findall(r'\d+', text)
+        return int(numbers[0]) if numbers else None
+
+    return None
 
 # ---------------- INPUT ----------------
 user_input = st.chat_input(" ask a question...")
